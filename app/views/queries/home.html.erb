@@ -1,14 +1,12 @@
-<%= if @dish.nil? then "No Dish" else @dish.dish end %>
-
 <div class="row">
   <div class="col-md-offset-2 col-md-8">
-    <h2 align="center"> Start Cooking </h2>
   </div>
+    <h2 align="center"> Start Cooking </h2>
 </div>
 
 <div class="row">
   <div class="col-md-offset-3 col-md-6">
-    <form action="queries/retrieve">
+    <form action="queries/results">
       <div class="form-group">
         <input type="text" id="query" name="query" class="form-control">
       </div>
