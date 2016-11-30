@@ -27,11 +27,18 @@ class QueriesController < ApplicationController
     full_url = food_2_fork_search_url + params[:query]
     food_2_fork_hash = JSON.parse(open(full_url).read)
     @result_hash = food_2_fork_hash
-    @recipe = get_recipes(@result_hash)
+    max_recipes = [@result_hash["recipes"].length, 3].min - 1
+
+    @ingredient_lists = Array.new
+    for i in 0..max_recipes
+      @ingredient_lists << get_recipes(@result_hash, i)["recipe"]["ingredients"]
+    end
+
+    # redirect_to("results/results.html.erb")
   end
 
-  def get_recipes(hash)
-    rId = hash["recipes"][0]["recipe_id"]
+  def get_recipes(hash, i)
+    rId = hash["recipes"][i]["recipe_id"]
     food_2_fork_recipe_url = "http://food2fork.com/api/get?key=9d4bb2fbc1fb896ab72ed80caa894eb2&rId=" + rId.to_s
     return JSON.parse(open(food_2_fork_recipe_url).read)
   end
